@@ -43,7 +43,8 @@ class ComicController extends Controller
             'thumb'=>'required|url',
             'price'=>'required|numeric',
             'series'=>'required',
-            'sale_date'=>'required|date_format:Y-m-d'
+            'sale_date'=>'required|date_format:Y-m-d',
+            'type'=>'required'
         ]); 
 
        $data = $request->all();
@@ -67,9 +68,9 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Card $comic)
     {
-        $comic = Card::find($id);
+     /*    $comic = Card::find($id); */
 
         return view('comics.show', compact('comic'));
 
@@ -81,9 +82,9 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Card $comic)
     {
-        //
+        return view('comics.edit', compact('comic'));
     }
 
     /**
@@ -93,9 +94,21 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Card $comic)
     {
-        //
+        $request->validate([
+            'title'=>'max:400',
+            'description' =>'min:20',
+            'thumb'=>'url',
+            'price'=>'numeric',
+            'sale_date'=>'date_format:Y-m-d',
+
+        ]);
+    
+        $comic->update($request->all());
+    
+        return redirect()->route('comics.index')
+                        ->with('success','Comic updated successfully');
     }
 
     /**

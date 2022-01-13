@@ -6,24 +6,34 @@
 
 @section('content')
     <div class="container">
-        <h1 class="mb-5">Lista comics</h1>
+      
 
-        {{-- <a class="btn btn-link" href="{{ route('users.create') }}">Aggiungi...</a> --}}
-        <div class="list-group">
+        <a class="btn btn-secondary my-5" aria-current="page" href="{{ route('comics.create') }}">Add New Comic</a>
+
+        <div class="row row-cols-4">
             @foreach ($comics as $comic)
-                <a href="{{ route('comics.show', $comic->id) }}" class="list-group-item list-group-item-action"
-                    aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ $comic->title }}</h5>
-                        <small>{{ $comic->price }} &#128;</small>
+                <div class="col">
+                    <div class="card mb-5" style="width: 18rem;">
+                        <img src="{{ $comic->thumb }}" class="card-img-top" alt="thumb comic #{{ $comic->thumb }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $comic->title }}</h5>
+                            <p class="card-text">{{ $comic->series }}</p>
+                        </div>
+
+                        <div class="card-body text-center">
+                            <a href="{{ route('comics.show', $comic->id) }}" class="card-link">Show</a>
+                            <a href="{{ route('comics.edit', $comic->id) }}" class="card-link">Modify</a>
+                            <a href="#" class="card-link">Delete</a>
+
+                        </div>
                     </div>
-                    <p class="mb-1">{{ $comic->series }}</p>
-                    <small>{{ $comic->type }}</small>
-                </a>
+                </div>
+
+
             @endforeach
+        
+    </div>
 
-        </div>
 
-       
     </div>
 @endsection
