@@ -38,7 +38,7 @@ class ComicController extends Controller
     public function store(Request $request)
     {
        $request->validate([
-            'title'=>'required|unique:post|max:400',
+            'title'=>'required|max:400|unique:cards,title',
             'description' =>'required|min:20',
             'thumb'=>'required|url',
             'price'=>'required|numeric',
@@ -97,7 +97,7 @@ class ComicController extends Controller
     public function update(Request $request, Card $comic)
     {
         $request->validate([
-            'title'=>'max:400',
+            'title'=>'max:400|unique:cards,title,' . $comic->id,
             'description' =>'min:20',
             'thumb'=>'url',
             'price'=>'numeric',
@@ -117,8 +117,11 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Card $comic)
     {
-        //
+        $comic->delete();
+    
+        return redirect()->route('comics.index')
+                        ->with('success','Comic deleted successfully');
     }
 }

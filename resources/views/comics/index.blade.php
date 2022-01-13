@@ -21,9 +21,9 @@
                         </div>
 
                         <div class="card-body text-center">
-                            <a href="{{ route('comics.show', $comic->id) }}" class="card-link">Show</a>
-                            <a href="{{ route('comics.edit', $comic->id) }}" class="card-link">Modify</a>
-                            <a href="#" class="card-link">Delete</a>
+                            <a class="btn btn-primary" href="{{ route('comics.show', $comic->id) }}" class="card-link">Show</a>
+                            <a class="btn btn-primary" href="{{ route('comics.edit', $comic->id) }}" class="card-link">Edit</a>
+                            @include('partials.delete_btn')
 
                         </div>
                     </div>
